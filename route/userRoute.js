@@ -5,6 +5,10 @@ const router = express.Router()
 
 router.post('/singup',(req,res)=>{
     const { email, password, userName } = req.body;
+    if (!email || !password || !userName) {
+      res.json({ error: 'Email, password, and userName are required' });
+      return;
+    }
 
     // Check if email already exists in the database
     const checkEmailSql = 'SELECT * FROM user WHERE email = ?';
@@ -35,11 +39,12 @@ router.post('/singup',(req,res)=>{
       });
     });
 })
-router.post('/login',(req,res)=>{
-    const { email, password } = req.body;
+router.post('/login',async (req,res)=>{
+   
+    const { email, password } = await req.body;
   const sql = 'SELECT * FROM user WHERE email = ? AND password = ?';
   connectUser.query(sql, [email, password], (err, result) => {
-    if (err) throw err;
+    if (err) throw err;  
     if (result.length === 0) {
       res.json({ error: 'Invalid email or password' });
     } else {
