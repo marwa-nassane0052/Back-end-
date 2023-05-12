@@ -1,6 +1,39 @@
 const connectUser = require('../database')
 const express = require('express')
 const router = express.Router()
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'ahlembendouba@gmail.com',
+    pass: 'mjpolnzknzhxpnyy',
+  
+ },
+});
+
+// function to send welcome email
+const sendWelcomeEmail = (email) => {
+ // setup email data
+ const mailOptions = {
+    from: 'ahlembendouba@gmail.com',
+    to: email,
+    subject: 'Welcome to Elitea !',
+    text: 'Thank you for signing up to Our web Site !',
+  };
+
+ // send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+    } else {
+     console.log('Email sent: ' + info.response);
+   }
+ });
+};
 
 
 router.post('/singup',(req,res)=>{
@@ -28,12 +61,13 @@ router.post('/singup',(req,res)=>{
         if (err) {
           res.status(500).json({ error: 'Internal server error' });
           return;
+        }else{
+          sendWelcomeEmail(email)
         }
         const user = {
           id: result.insertId,
           email,
-          userName,
-          password
+          userName
         };
         res.json(user);
       });
@@ -59,6 +93,34 @@ router.post('/login',async (req,res)=>{
     }
   });
 });
+
+
+router.get('/allusers', (req, res) => {
+  const sql = 'SELECT * FROM user';
+  connectUser.query(sql, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      const users = [];
+      result.forEach(row => {
+        const user = {
+          id: row.id,
+          email: row.email,
+          userName: row.userName
+        };
+        users.push(user);
+      });
+      res.json(users);
+    }
+  });
+});
+
+
+
+
+
+
 
 
 

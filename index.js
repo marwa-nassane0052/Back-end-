@@ -23,9 +23,27 @@ app.use(express.json());
 const userRoute = require('./route/userRoute')
 app.use('/user',userRoute)
 
+const wishlistRout =require('./route/wishlistRoute')
+app.use('/wishlist',wishlistRout)
+
+
+const ResetPassword = require('./route/ResetePassword')
+app.use('/',ResetPassword)
+app.use('/newpassword/:resetToken', (req, res) => {
+    const resetToken = req.params.resetToken;
+    // Do something with the reset token (e.g. render a new password form)
+  });
+
+
+const cardRoute=require('./route/cartRoutte')
+app.use('/card',cardRoute)
 
 const update=require('./route/updateprod')
 app.use('/',update)
+
+const GetProductsByCtegory=require('./route/Getproduct')
+app.use('/',GetProductsByCtegory)
+
 app.get("/",(req,res) =>{
     res.send("hello express")
 })
