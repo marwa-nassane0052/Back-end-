@@ -13,11 +13,11 @@ router.post('/addproduct', upload.fields([
   { name: 'img3' },
   { name: 'img4' }
 ]),function(req,res){
-  const { name, description, price, color, Sstock, Mstock, Lstock, XLstock, XXLstock, category } = req.body;
+  const { name, description, price, color, Sstock, Mstock, Lstock, XLstock, XXLstock, category, color1, color2, color3 } = req.body;
   const { img, img2, img3, img4 } = req.files;
 
-    const sql='INSERT INTO product (name, description, price, color, Sstock, Mstock, Lstock, XLstock, XXLstock, category,img, img2, img3, img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    const  values =[name, description, price, color, Sstock, Mstock, Lstock, XLstock, XXLstock || 0,category,img[0].filename, img2[0].filename, img3[0].filename, img4[0].filename];
+    const sql='INSERT INTO product (name, description, price, color, Sstock, Mstock, Lstock, XLstock, XXLstock, category,color1, color2, color3,img, img2, img3, img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)'
+    const  values =[name, description, price, color, Sstock, Mstock, Lstock, XLstock, XXLstock || 0,category,color1, color2, color3,img[0].filename, img2[0].filename, img3[0].filename, img4[0].filename];
    
     mysql.query(sql,values,function(err){
       if (err) {

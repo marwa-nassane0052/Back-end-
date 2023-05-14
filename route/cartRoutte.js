@@ -3,10 +3,10 @@ const express = require('express')
 const router = express.Router()
 
 router.post('/addtocart',(req,res)=>{
-    const { userId, productId ,price } = req.body;
+    const { userId, productId ,price,quantity,size,color} = req.body;
     connectCart.query(
-    'INSERT INTO card (user_id, product_id,price) VALUES (?, ?,?)',
-    [userId, productId,price],
+    'INSERT INTO card (user_id, product_id,price,quantity,size,color) VALUES (?, ?,?,?,?,?)',
+    [userId, productId,price,quantity,size,color],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -20,7 +20,7 @@ router.post('/addtocart',(req,res)=>{
 
 router.get('/get/:userId',(req,res)=>{
     const userId = req.params.userId;
-    let sql = `SELECT product.id, product.name, product.description,product.price, product.img
+    let sql = `SELECT product.id, product.name, product.description,product.price, product.img,card.color,card.size
                FROM product 
                JOIN  card ON card.product_id = product.id 
                WHERE card.user_id = ?`;
