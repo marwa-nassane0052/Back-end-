@@ -20,7 +20,7 @@ router.post('/addtocart',(req,res)=>{
 
 router.get('/get/:userId',(req,res)=>{
     const userId = req.params.userId;
-    let sql = `SELECT product.id, product.name, product.description,product.price, product.img,card.color,card.size
+    let sql = `SELECT product.id, product.name, product.description,product.price, product.img,card.color,card.size,card.quantity 
                FROM product 
                JOIN  card ON card.product_id = product.id 
                WHERE card.user_id = ?`;
@@ -33,9 +33,9 @@ router.get('/get/:userId',(req,res)=>{
 
 
 router.delete('/remove', (req, res) => {
-  const { userId, productId } = req.body;
-  const removeProductSql = 'DELETE FROM card WHERE user_id = ? AND product_id = ?';
-  connectCart.query(removeProductSql, [userId, productId], (err, result) => {
+  const { userId, productId,size,color } = req.body;
+  const removeProductSql = 'DELETE FROM card WHERE user_id = ? AND product_id = ? and size=? and color=?' ;
+  connectCart.query(removeProductSql, [userId, productId,size,color], (err, result) => {
     if (err) {
       throw err;
     }

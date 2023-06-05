@@ -44,6 +44,18 @@ app.use('/',update)
 const GetProductsByCtegory=require('./route/Getproduct')
 app.use('/',GetProductsByCtegory)
 
+const payment=require('./route/PaymentInfo')
+app.use('/',payment)
+
+const getOrders=require('./route/Getorders')
+app.use('/api',getOrders)
+
+const comnt=require('./route/messageRoute')
+app.use('/mesg',comnt)
+
+const codepromo=require('./route/codepromoRoute')
+app.use('/code',codepromo)
+
 app.get("/",(req,res) =>{
     res.send("hello express")
 })

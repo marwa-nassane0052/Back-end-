@@ -45,23 +45,9 @@ CREATE TABLE IF NOT EXISTS wishlist (
   FOREIGN KEY (product_id) REFERENCES product(id)
 )
 `
-const creatCartTable=`
-CREATE TABLE IF NOT EXISTS card(
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  product_id INT NOT NULL,
-  price FLOAT(4) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user(id),
-  FOREIGN KEY (product_id) REFERENCES product(id),
-  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-)
-`
-const addConstraintQuery = `
-ALTER TABLE card
-ADD CONSTRAINT fk_user
-UNIQUE KEY user_product_unique_two (user_id,product_id);
-`;
+
+
+
 connection.query(createUserTableQuery, (error, result) => {
   if (error) {
     console.error('Error creating product table: ', error);
@@ -81,21 +67,7 @@ connection.query(createWishListe, (error, result) => {
 });
 
 
-connection.query(creatCartTable, (error, result) => {
-  if (error) {
-    console.error('Error creating product table: ', error);
-    return;
-  }
-  console.log('carte table  table created successfully!');
- connection.end(); // close the MySQL connection
-});
 
-connection.query(addConstraintQuery, (error, result) => {
-  if (error) {
-    console.error('Error creating product table: ', error);
-    return;
-  }
-  console.log('add the conntrainte successfully!');
- connection.end(); // close the MySQL connection
-});
+
+
  module.exports=connection
