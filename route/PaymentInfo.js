@@ -111,11 +111,11 @@ router.post('/payment/:user_id', (req, res) => {
                   break;
 
                   case 'XL':
-                  updateQuery = `UPDATE product SET Lstock = Xlstock - ${quantity} WHERE id = ${productId}`;
+                  updateQuery = `UPDATE product SET XLstock = Xlstock - ${quantity} WHERE id = ${productId}`;
                   break;
 
                   case 'XXL':
-                  updateQuery = `UPDATE product SET Lstock = XXMstock - ${quantity} WHERE id = ${productId}`;
+                  updateQuery = `UPDATE product SET XXLstock = XXMstock - ${quantity} WHERE id = ${productId}`;
                   break;
                 default:
                 

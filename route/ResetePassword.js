@@ -32,12 +32,12 @@ router.post('/password-reset', (req, res) => {
        const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'ahlembendouba@gmail.com',
+            user: 'eliteawebsite@gmail.com',
             pass: 'mjpolnzknzhxpnyy'
          }
        });
       const mailOptions = {
-         from: 'ahlembendouba@gmail.com',
+         from: 'eliteawebsite@gmail.com',
          to: email,
          subject: 'Password reset request',
          text:`Hello ${user.userName},\n\nWe received a request to reset your password. Please click the following link to reset your password:\n\nhttp://localhost:3000/newpassword/${resetToken}\n\nThis link will expire in 1 hour.\n\nIf you did not request a password reset, please ignore this email.\n\nBest regards,\nThe team`
